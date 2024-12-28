@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -43,8 +45,16 @@ public class EmployeeController {
     }
 
     //Build Get all employees
+    @GetMapping
     public ResponseEntity<List<EmployeeDto>> getallEmployee(){
         List<EmployeeDto> employees = employeeService.getAllEmployees();
         return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+
+    //Build update employee
+    @PutMapping("{id}")
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable("id") Long employeeId, @RequestBody EmployeeDto updateEmployee){
+        EmployeeDto employeeDto = employeeService.updateEmployee(employeeId, updateEmployee);
+        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 }
